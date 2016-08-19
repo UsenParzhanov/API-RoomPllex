@@ -1,0 +1,17 @@
+#User: Nurbakit
+#Date: 03-Aug-16
+#Time: 7:47 AM
+
+Options +ExecCGI -Indexes
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+
+RewriteEngine on
+RewriteBase /
+
+RewriteCond &{REQUEST_FILENAME} !-d
+RewriteCond &{REQUEST_FILENAME} !-f
+RewriteCond &{REQUEST_FILENAME} !-l
+
+#RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+RewriteRule !\.(js|css|jpg|jpeg|png)$ index.php
