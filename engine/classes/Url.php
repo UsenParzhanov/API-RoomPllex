@@ -7,8 +7,8 @@
  * Time: 1:34 PM
  */
 class Url{
-  public $getURL;
-  public $getCountURL;
+  public $getUrl;
+  public $getCountUrl;
   protected $_objResponse;
   protected $_objHelp;
 
@@ -21,29 +21,22 @@ class Url{
     $url = filter_var($url, FILTER_SANITIZE_URL);
     $url = explode('/', $url);
 
-    $this->getURL = $url;
-    $this->getCountURL = sizeof($url);
+    $this->getUrl = $url;
+    $this->getCountUrl = sizeof($url);
     $this->_objResponse = new Response();
     $this->_objHelp = new Help();
   }
 
   /**
-   * @param $index
-   * @param $urlName
-   * @return bool
+   * Запуск урл
    */
-  public function checkIsEqualRunURL($index, $urlName){
-    $isEqual = $this->getURL[$index] === $urlName;
-    if($isEqual) $urlName();
-    return $isEqual ? true : false;
-  }
-
-  public function funcRunURL(){
-    if($this->getURL[$this->getCountURL-1] === 'getURL') getURL();
-    elseif($this->getURL[0] === 'getHelp') {$this->_objResponse->success($this->_objHelp->get);}
-    elseif($this->getURL[1] === 'getHelp') $this->_objResponse->success($this->_objHelp->get[$this->getURL[1]]);
-    elseif(isset($this->_objHelp->getHelp[$this->getURL[0]])) $this->getURL[0]();
-    else $this->_objResponse->error('Не возможно найти имя функция', 'Главный');
+  public function funcRunUrl(){
+    if(!isset($this->_objHelp->getHelp[$this->getUrl[0]]) XOR $this->getUrl[0] === '') $this->_objResponse->error('Не возможно найти имя функция', 'Главный');
+    elseif($this->getUrl[0] === '') $this->_objResponse->error('Запрос не должын быть пустым', 'Главный');
+    elseif($this->getUrl[$this->getCountUrl-1] === 'getUrl') getUrl();
+    elseif($checkSecondGetHelp = isset($this->getUrl[1]) ? $this->getUrl[1] === 'getHelp' : false) $this->_objResponse->success($this->_objHelp->getHelp[$this->getUrl[0]]);
+    elseif($this->getUrl[0] === 'getHelp') $this->_objResponse->success($this->_objHelp->getHelp);
+    else $this->getUrl[0]();
   }
 
   /**
@@ -56,11 +49,11 @@ class Url{
     $number = sizeof($arrParamName);
     $numberMore = $number + 1;
 
-    $checkMore = $this->getCountURL > $numberMore;
+    $checkMore = $this->getCountUrl > $numberMore;
     if($checkMore) $this->_objResponse->error("{$number} параметра должын быть [{$paramName}]", $funcName);
 
     for($i = 1; $i <= $number; $i++){
-      $checkIsset = !isset($this->getURL[$i]);
+      $checkIsset = !isset($this->getUrl[$i]);
       $paramName = trim($arrParamName[$i-1]);
       if($checkIsset) $this->_objResponse->error("Не найден [{$paramName}]", $funcName);
     }

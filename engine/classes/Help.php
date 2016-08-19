@@ -11,6 +11,9 @@ class Help{
 
   function __construct(){
     $this->getHelp = array(
+      'getHelp' => array(
+          'function-name' => 'Мини документация'
+      ),
 
       'signUp' => array(
         'function-name' => 'Регистрация',
@@ -22,8 +25,9 @@ class Help{
         'example' => 'signUp/email/password/againPassword'
       ),
 
-
-      
+      'getUrl' => array(
+        'function-name' => 'Обратно передает url',
+      ),
 
     );
   }

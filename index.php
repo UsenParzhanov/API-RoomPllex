@@ -14,4 +14,6 @@ spl_autoload_register(function($class){
   require_once("engine/classes/{$class}.php");
 });
 
-require_once('engine/engine.php');
+require_once('engine/functions.php');
+
+runApi();
